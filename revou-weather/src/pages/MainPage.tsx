@@ -1,10 +1,10 @@
 import { Button, Form, InputGroup, ListGroup } from "react-bootstrap";
+import CityList from "../components/CityList";
 
-type City = { name: string; lat: string; lng: string };
-type CityListProps = { cities: Array<City>; };
-
-
+// src/pages/MainPage.tsx
 const MainPage = () => {
+
+    const [searchText, setSearchText] = ('')
     return (
       <view>
         <InputGroup className='mb-3'>
@@ -13,6 +13,12 @@ const MainPage = () => {
             aria-label='Search city'
             aria-describedby='city'
           />
+
+<Form.Control
+      placeholder='Search city'
+      onChange={(evt) => setSearchText(evt.target.value)}
+    />
+
           <Button variant='outline-primary' id='city'>
             Search
           </Button>
@@ -21,27 +27,7 @@ const MainPage = () => {
       </view>
     );
   };
-
-// src/components/CityList.tsx
-const CityList = (props: CityListProps) => {
-    const onCityClick = (city: City) => {
-      console.log(city);
-    };
-  
-    return (
-      <ListGroup>
-        {props.cities.map((city) => (
-          <ListGroup.Item
-            key={city.name}
-            action
-            onClick={() => onCityClick(city)}
-          >
-            <h4>{city.name}</h4>
-          </ListGroup.Item>
-        ))}
-      </ListGroup>
-    );
-  };
   
   export default MainPage;
+  
   
