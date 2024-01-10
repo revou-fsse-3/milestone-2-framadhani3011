@@ -1,4 +1,5 @@
 import { ListGroup } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 type City = { name: string; lat: string; lng: string };
 type CityListProps = { cities: Array<City>; };
@@ -20,12 +21,10 @@ const City = [
     return (
       <ListGroup>
         {props.cities.map((city) => (
-          <ListGroup.Item
-            key={city.name}
-            action
-            onClick={() => onCityClick(city)}
-          >
-            <h4>{city.name}</h4>
+          <ListGroup.Item key={city.name} 
+          action
+          onClick={() => onCityClick(city)}>
+          <Link to={`/city?lat=${city.lat}&lng=${city.lng}`}>{city.name}</Link>
           </ListGroup.Item>
         ))}
       </ListGroup>

@@ -1,9 +1,45 @@
-import { Button, Form, InputGroup, } from "react-bootstrap";
+import { Button, Form, InputGroup, ListGroup, } from "react-bootstrap";
 import CityList from "../components/CityList";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import useDebounce from "../hooks/useDebounce";
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<MainPage />} />
+        <Route path='/city' element={<CityPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
 
 
+const CityPage = () => {
+  const location = useLocation();
+  const [weatherData, setWeatherData] = useState<WeatherData>();
+
+  useEffect(() => {
+    const getWeather = async () => {
+      const {lat, lng} = getSearchLatLong(location.search)
+
+      const url = `https://api.weatherbit.io/v2.0/current?key=${API_KEY}&lat=${lat}&lon=${lng}`;
+      const result = await axios.get(url);
+
+      setWeatherData(result.data.data[0]);
+    };
+    if (!weatherData) getWeather();
+  }, []);
+
+}
+
+
+const [latqs, lngqs] = location.search.substring(1).split('&');
+const lat = latqs.split('=')[1];
+const lng = lngqs.split('=')[1];
 const [searchText, setSearchText] = useState('')
 
 const MainPage = () => {
@@ -30,7 +66,14 @@ const MainPage = () => {
         <CityList cities={cities} />
       </view>
 
+      
+
     );
+    const { debounce } = useDebounce()
+
+    useEffect(() => {
+      debounce(callApi, 500)
+    }, [searchText])
   };
 
 
@@ -60,7 +103,6 @@ const MainPage = () => {
   useEffect(() => {
     callApi()
   },[searchText])
-  
 
   export default MainPage;
   
