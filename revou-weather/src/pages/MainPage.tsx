@@ -104,6 +104,7 @@ const MainPage = () => {
     callApi()
   },[searchText])
 
+
   export default MainPage;
   
   
