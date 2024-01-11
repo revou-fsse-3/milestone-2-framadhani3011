@@ -20,7 +20,7 @@ function App() {
 
 const CityPage = () => {
   const location = useLocation();
-  const [weatherData, setWeatherData] = useState<WeatherData>();
+  const [weatherData, setWeatherData] = useState<weatherData>();
 
   useEffect(() => {
     const getWeather = async () => {
@@ -36,7 +36,7 @@ const CityPage = () => {
 
 }
 
-
+const location = useLocation();
 const [latqs, lngqs] = location.search.substring(1).split('&');
 const lat = latqs.split('=')[1];
 const lng = lngqs.split('=')[1];
@@ -107,4 +107,8 @@ const MainPage = () => {
 
   export default MainPage;
   
+
+function getSearchLatLong(search: string): { lat: any; lng: any; } {
+  throw new Error("Function not implemented.");
+}
   
