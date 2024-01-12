@@ -6,14 +6,15 @@ import useDebounce from "../hooks/useDebounce";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
-function App() {
+function Weather() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<MainPage />} />
-        <Route path='/city' element={<CityPage />} />
-      </Routes>
-    </BrowserRouter>
+    <h1>aku pusing</h1>
+    // <BrowserRouter>
+    //   <Routes>
+    //     <Route path='/' element={<MainPage />} />
+    //      <Route path='/city' element={<CityPage />} /> 
+    //   </Routes>
+    // </BrowserRouter>
   );
 }
 
@@ -45,6 +46,12 @@ const [searchText, setSearchText] = useState('')
 const MainPage = () => {
 
     
+    const { debounce } = useDebounce()
+
+    useEffect(() => {
+      debounce(callApi, 500)
+    }, [searchText])
+
     return (
       <view>
         <InputGroup className='mb-3'>
@@ -53,11 +60,11 @@ const MainPage = () => {
             aria-label='Search city'
             aria-describedby='city'
           />
-
-<Form.Control
-      placeholder='Search city'
-      onChange={(evt) => setSearchText(evt.target.value)}
-    />
+  
+          <Form.Control
+            placeholder='Search city'
+            onChange={(evt) => setSearchText(evt.target.value)}
+          />
 
           <Button variant='outline-primary' id='city'>
             Search
@@ -65,17 +72,8 @@ const MainPage = () => {
         </InputGroup>
         <CityList cities={cities} />
       </view>
-
-      
-
     );
-    const { debounce } = useDebounce()
-
-    useEffect(() => {
-      debounce(callApi, 500)
-    }, [searchText])
-  };
-
+};
 
   const [cities, setCities] = useState([])
 
