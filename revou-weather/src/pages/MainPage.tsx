@@ -8,13 +8,12 @@ import { useLocation } from "react-router-dom";
 
 function Weather() {
   return (
-    <h1>aku pusing</h1>
-    // <BrowserRouter>
-    //   <Routes>
-    //     <Route path='/' element={<MainPage />} />
-    //      <Route path='/city' element={<CityPage />} /> 
-    //   </Routes>
-    // </BrowserRouter>
+     <BrowserRouter>
+       <Routes>
+         <Route path='/' element={<MainPage />} />
+          <Route path='/city' element={<CityPage />} /> 
+      </Routes>
+     </BrowserRouter>
   );
 }
 
